@@ -5,6 +5,7 @@ function Node(value) {
 class LinkedList {
 	constructor() {
 		this.head = null;
+		this.nodeCount = 0;
 	}
 
 	// adds a new node containing value to the end of the list
@@ -16,6 +17,7 @@ class LinkedList {
 			while (tmp.nextNode != null) tmp = tmp.nextNode;
 			tmp.nextNode = Node(value);
 		}
+		this.nodeCount++;
 	}
 
 	// adds a new node containing value to the start of the list
@@ -23,6 +25,13 @@ class LinkedList {
 		const before = this.head;
 		this.head = Node(value);
 		this.head.nextNode = before;
+		this.nodeCount++;
+	}
+
+	// returns the total number of nodes in the list
+	size() {
+		console.log(`Total Nodes: ${this.nodeCount}`);
+		return this.nodeCount;
 	}
 
 }
@@ -30,10 +39,11 @@ class LinkedList {
 
 // TEST
 let list = new LinkedList();
-console.log(list);
 list.append('lmao');
-// list.prepend('eiei');
+list.prepend('ehe');
+list.prepend('ehe');
+list.prepend('ehe');
+list.prepend('ehe');
 
-list.append('lmao');
-list.append('lmao');
-console.log(list);
+console.log(list.size());
+
