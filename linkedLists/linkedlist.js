@@ -34,6 +34,18 @@ class LinkedList {
 		return this.nodeCount;
 	}
 
+	// returns the first node in the list
+	headNode() {
+		return this.head;
+	}
+
+	// returns the last node in the list
+	tailNode() {
+		let tmp = this.head;
+		while (tmp.nextNode != null) tmp = tmp.nextNode;
+		return tmp;
+	}
+
 }
 
 
@@ -44,6 +56,9 @@ list.prepend('ehe');
 list.prepend('ehe');
 list.prepend('ehe');
 list.prepend('ehe');
+list.append('last node');
 
 console.log(list.size());
+console.log(list.headNode());
+console.log(list.tailNode());
 
