@@ -41,8 +41,22 @@ class LinkedList {
 
 	// returns the last node in the list
 	tailNode() {
+		let tail = this.head;
+		while (tail.nextNode != null) tail = tail.nextNode;
+		return tail;
+	}
+
+	// returns the node at the given index
+	at(index) {
 		let tmp = this.head;
-		while (tmp.nextNode != null) tmp = tmp.nextNode;
+
+		for (let i = 0; i < index; i++) {
+			if (tmp.nextNode == null && i < index) {
+				console.log(`No node at index ${index}`);
+				return;
+			}
+			tmp = tmp.nextNode;
+		}
 		return tmp;
 	}
 
@@ -51,14 +65,15 @@ class LinkedList {
 
 // TEST
 let list = new LinkedList();
-list.append('lmao');
-list.prepend('ehe');
-list.prepend('ehe');
-list.prepend('ehe');
-list.prepend('ehe');
-list.append('last node');
+// list.append('lmao');
+// list.prepend('ehe');
+// list.append('last node');
+list.append('node0');
+list.append('node1');
+list.append('node2');
 
-console.log(list.size());
-console.log(list.headNode());
-console.log(list.tailNode());
+// console.log(list.size());
+// console.log(list.headNode());
+// console.log(list.tailNode());
+console.log(`At index: `, list.at(3));
 
