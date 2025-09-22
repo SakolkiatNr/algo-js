@@ -163,6 +163,38 @@ class LinkedList {
 		}
 	}
 
+	// removes node at the given index
+	removeAt(index) {
+		let i = 0;
+		let pointer = this.head;
+		if (pointer == null) return;
+		if (index < 0) return;
+
+		// remove head node
+		if (index === 0) {
+			let newHead = pointer.nextNode;
+			this.head = newHead;
+			return;
+		}
+
+		while (pointer != null) {
+			// if out of bound
+			if (pointer.nextNode == null && index > i) {
+				console.log('out of bound');
+				return;
+			}
+			// remove node in between
+			if (i == index - 1) {
+				let next = pointer.nextNode.nextNode;
+				pointer.nextNode = next;
+				return;
+			}
+
+			pointer = pointer.nextNode;
+			i++;
+		}
+	}
+
 	// preview linkedlist in console. 
 	// format: ( value ) -> ( value ) -> ( value ) -> null
 	toString() {
@@ -189,6 +221,7 @@ list.append("cat");
 // list.append("snake");
 // list.append("turtle");
 list.insertAt('Xenomorph', 0);
-// list.insertAt('Alien', 9);
 
+list.toString();
+list.removeAt(0);
 list.toString();
