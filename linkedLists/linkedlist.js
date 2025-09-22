@@ -105,14 +105,32 @@ class LinkedList {
 
 		return false;
 	}
+
+	// returns the index of the node containing value, or null if not found.
+	find(value) {
+		let tmp = this.head;
+		let index = 0;
+
+		if (tmp == null) return null;
+
+		while (tmp.nextNode != null) {
+			if (tmp.value == value) return index;
+			index++;
+			tmp = tmp.nextNode;
+		}
+		if (tmp.value == value) return index;
+
+		return null;
+	}
 }
 
 
 // TEST
 let list = new LinkedList();
 list.append('node1');
-// list.append('node2');
+list.append('node2');
 
-console.log(list.contains('yikes'));
-console.log(list.contains('node1'));
-console.log(list.contains('node2'));
+console.log(list.find('node1'));
+console.log(list.find('node2'));
+console.log(list.find('node3'));
+
