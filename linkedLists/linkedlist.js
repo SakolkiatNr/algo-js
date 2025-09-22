@@ -90,27 +90,29 @@ class LinkedList {
 			tail = tail.nextNode;
 		}
 	}
+
+	// returns true if the passed in value is in the list and otherwise returns false.
+	contains(value) {
+		let tmp = this.head;
+		if (tmp == null) return false;
+
+		while (tmp.nextNode != null) {
+			if (tmp.value == value) return true;
+			tmp = tmp.nextNode;
+		}
+		// check first & last node
+		if (tmp.value == value) return true;
+
+		return false;
+	}
 }
 
 
 // TEST
 let list = new LinkedList();
 list.append('node1');
-list.append('node2');
-// list.append('node4');
-// list.prepend('node0');
+// list.append('node2');
 
-// console.log(list.size());
-// console.log(list.headNode());
-// console.log(list.tailNode());
-// console.log(`At index: `, list.at(0));
-console.log(list);
-// console.log(list.size());
-list.pop();
-console.log(list);
-// console.log(list.size());
-list.pop();
-console.log(list);
-// console.log(list.size());
-list.pop();
-console.log(list);
+console.log(list.contains('yikes'));
+console.log(list.contains('node1'));
+console.log(list.contains('node2'));
