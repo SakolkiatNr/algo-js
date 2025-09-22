@@ -29,7 +29,6 @@ class LinkedList {
 	size() {
 		let count = 0;
 		let tmp = this.head;
-
 		if (tmp == null) return count;
 
 		while (tmp.nextNode != null) {
@@ -165,7 +164,6 @@ class LinkedList {
 
 	// removes node at the given index
 	removeAt(index) {
-		let i = 0;
 		let pointer = this.head;
 		if (pointer == null) return;
 		if (index < 0) return;
@@ -177,6 +175,7 @@ class LinkedList {
 			return;
 		}
 
+		let i = 0;
 		while (pointer != null) {
 			// if out of bound
 			if (pointer.nextNode == null && index > i) {
@@ -216,11 +215,8 @@ class LinkedList {
 let list = new LinkedList();
 list.append("dog");
 list.append("cat");
-// list.append("parrot");
-// list.append("hamster");
-// list.append("snake");
-// list.append("turtle");
-list.insertAt('Xenomorph', 0);
+list.prepend("human");
+list.insertAt('Xenomorph', 2);
 
 list.toString();
 list.removeAt(0);
