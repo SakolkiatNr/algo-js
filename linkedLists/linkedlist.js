@@ -118,19 +118,49 @@ class LinkedList {
 			index++;
 			tmp = tmp.nextNode;
 		}
+
+		// check first & last node
 		if (tmp.value == value) return index;
 
 		return null;
 	}
+
+	// inserts a new node with the provided value at the given index.
+	insertAt(value, index) {
+
+	}
+
+
+
+
+	// preview linkedlist in console. 
+	// format: ( value ) -> ( value ) -> ( value ) -> null
+	toString() {
+
+		let tmp = this.head;
+		let output = '';
+
+		while (tmp.nextNode != null) {
+			output += `( ${tmp.value} ) -> `;
+			tmp = tmp.nextNode;
+		}
+		if (tmp.nextNode == null) output += `( ${tmp.value} ) -> null`;
+		console.log(output);
+	}
+
+
+
+
 }
 
 
 // TEST
 let list = new LinkedList();
-list.append('node1');
-list.append('node2');
+list.append("dog");
+list.append("cat");
+list.append("parrot");
+list.append("hamster");
+list.append("snake");
+list.append("turtle");
 
-console.log(list.find('node1'));
-console.log(list.find('node2'));
-console.log(list.find('node3'));
-
+list.toString();
