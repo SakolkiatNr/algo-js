@@ -127,11 +127,41 @@ class LinkedList {
 
 	// inserts a new node with the provided value at the given index.
 	insertAt(value, index) {
+		if (index < 0) return;
 
+		let newNode = Node(value);
+		let tmp = this.head;
+		let i = 0;
+
+		// case: insert at head
+		if (index == 0) {
+			newNode.nextNode = tmp;
+			this.head = newNode;
+			return;
+		}
+
+		// case: insert between node
+		while (tmp.nextNode != null) {
+			if (i === index - 1) {
+				newNode.nextNode = tmp.nextNode;
+				tmp.nextNode = newNode;
+				return;
+			}
+			tmp = tmp.nextNode;
+			i++;
+		}
+
+		// case: insert at tail
+		if (i === index - 1) {
+			// newNode.nextNode = tmp.nextNode;
+			// tmp.nextNode = newNode;
+			tmp.nextNode = newNode;
+			return;
+		} else if (index - i > 1) {
+			console.log('out of bound');
+			return;
+		}
 	}
-
-
-
 
 	// preview linkedlist in console. 
 	// format: ( value ) -> ( value ) -> ( value ) -> null
@@ -147,10 +177,6 @@ class LinkedList {
 		if (tmp.nextNode == null) output += `( ${tmp.value} ) -> null`;
 		console.log(output);
 	}
-
-
-
-
 }
 
 
@@ -158,9 +184,11 @@ class LinkedList {
 let list = new LinkedList();
 list.append("dog");
 list.append("cat");
-list.append("parrot");
-list.append("hamster");
-list.append("snake");
-list.append("turtle");
+// list.append("parrot");
+// list.append("hamster");
+// list.append("snake");
+// list.append("turtle");
+list.insertAt('Xenomorph', 0);
+// list.insertAt('Alien', 9);
 
 list.toString();
