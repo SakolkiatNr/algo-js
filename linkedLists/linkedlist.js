@@ -5,7 +5,6 @@ function Node(value) {
 class LinkedList {
 	constructor() {
 		this.head = null;
-		this.nodeCount = 0;
 	}
 
 	// adds a new node containing value to the end of the list
@@ -17,7 +16,6 @@ class LinkedList {
 			while (tmp.nextNode != null) tmp = tmp.nextNode;
 			tmp.nextNode = Node(value);
 		}
-		this.nodeCount++;
 	}
 
 	// adds a new node containing value to the start of the list
@@ -25,13 +23,23 @@ class LinkedList {
 		const before = this.head;
 		this.head = Node(value);
 		this.head.nextNode = before;
-		this.nodeCount++;
 	}
 
 	// returns the total number of nodes in the list
 	size() {
-		console.log(`Total Nodes: ${this.nodeCount}`);
-		return this.nodeCount;
+		let count = 0;
+		let tmp = this.head;
+
+		if (tmp == null) return count;
+
+		while (tmp.nextNode != null) {
+			count++;
+			tmp = tmp.nextNode
+		}
+		// last node
+		if (tmp.nextNode == null) count++;
+
+		return count;
 	}
 
 	// returns the first node in the list
@@ -60,20 +68,49 @@ class LinkedList {
 		return tmp;
 	}
 
+	// removes the last element from the list
+	pop() {
+		let tail = this.head;
+
+		// empty list
+		if (tail == null) return;
+
+		// only one node
+		if (tail.nextNode == null) {
+			this.head = null;
+			return;
+		}
+
+		while (tail.nextNode != null) {
+			// node before last node
+			if (tail.nextNode.nextNode == null) {
+				tail.nextNode = null;
+				return;
+			}
+			tail = tail.nextNode;
+		}
+	}
 }
 
 
 // TEST
 let list = new LinkedList();
-// list.append('lmao');
-// list.prepend('ehe');
-// list.append('last node');
-list.append('node0');
 list.append('node1');
 list.append('node2');
+// list.append('node4');
+// list.prepend('node0');
 
 // console.log(list.size());
 // console.log(list.headNode());
 // console.log(list.tailNode());
-console.log(`At index: `, list.at(3));
-
+// console.log(`At index: `, list.at(0));
+console.log(list);
+// console.log(list.size());
+list.pop();
+console.log(list);
+// console.log(list.size());
+list.pop();
+console.log(list);
+// console.log(list.size());
+list.pop();
+console.log(list);
