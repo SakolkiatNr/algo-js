@@ -35,11 +35,42 @@ class HashMap {
 
 			// if key existed 
 			if (item) item[1] = value;
-			else {
-				this.bucket[index].push([key, value]);
-			}
+			// handle collision
+			else this.bucket[index].push([key, value]);
 		}
 	}
+
+	// takes one argument as a key and returns the value that is assigned to this key. If a key is not found, return null.
+	get(key) {
+		let index = this.hash(key);
+		let target = this.bucket[index];
+
+		if (target === null) return null;
+		else {
+			let item = this.bucket[index].find((pair) => pair[0] === key);
+			if (item) return item[1];
+			else return null;
+		}
+	}
+
+
+	// takes a key as an argument and returns true or false based on whether or not the key is in the hash map.
+	has(key) {
+		let index = this.hash(key);
+		let target = this.bucket[index];
+
+		if (target === null) return false;
+		else {
+			let item = this.bucket[index].find((pair) => pair[0] === key);
+			if (item) return true;
+			else return false;
+		}
+	}
+
+	remove(key) {
+
+	}
+
 
 }
 
@@ -48,7 +79,16 @@ let map = new HashMap();
 map.set('lmao', 'value1');
 map.set('yahoo', 'old');
 map.set('yahoo', 'new');
-map.set('yahoo', 'newer');
-map.set('yaw', 'yaranaika!');
+map.set('yahaha', 'yay!!!!');
+map.set('noice', 'noice noice!');
 
-console.log(map.bucket);
+console.log(map.get('yahaha'));
+console.log(map.get('noice'));
+console.log(map.get('lmao'));
+console.log(map.get('nani'));
+
+console.log(map.has('lmao'));
+console.log(map.has('nani'));
+
+
+// console.log(map.bucket);
