@@ -135,11 +135,10 @@ class HashMap {
 	entries() {
 		let arr = [];
 
-		for (let list in this.bucket) {
-			if (this.bucket[list] !== null) {
-				arr = arr.concat(this.bucket[list]);
-			}
-		}
+		this.bucket.forEach(ele => {
+			if (ele !== null) arr = arr.concat(ele);
+		});
+
 		return arr;
 	}
 
