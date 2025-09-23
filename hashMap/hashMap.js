@@ -20,8 +20,9 @@ class HashMap {
 
 	set(key, value) {
 		// check loadFactor
-		if (this.bucket.length > this.loadFactor * this.capacity) {
-			// increase capacity ()
+		if (this.length() + 2 > (this.loadFactor * this.capacity)) {
+			// increase capacity 
+			this.grow();
 		}
 
 		let index = this.hash(key);
@@ -142,18 +143,40 @@ class HashMap {
 		return arr;
 	}
 
+	// double capacity when reaches the load factor
+	grow() {
+		console.log('Upgrade hash size...');
 
+		let entries = this.entries();
+		this.capacity *= 2;
+		this.bucket = new Array(this.capacity).fill(null);
+
+		entries.forEach((data) => {
+			this.set(data[0], data[1]);
+		})
+	}
 }
 
+// Testing
 let map = new HashMap();
 
-map.set('lmao', 'value1');
-map.set('yahoo', 'old');
-map.set('yahoo', 'new');
-map.set('yahaha', 'yay!!!!');
-map.set('noice', 'noice noice!');
+map.set('apple', 'red')
+map.set('banana', 'yellow')
+map.set('carrot', 'orange')
+map.set('dog', 'brown')
+// map.set('elephant', 'gray')
+// map.set('frog', 'green')
+// map.set('grape', 'purple')
+// map.set('hat', 'black')
+// map.set('ice cream', 'white')
+// map.set('jacket', 'blue')
+// map.set('kite', 'pink')
+// map.set('lion', 'golden')
+// map.set('moon', 'silver')
+// map.set('Xenomorph', 'black')
 
-// console.log(map.bucket);
-// console.log(map.keys());
-// console.log(map.values());
-console.log(map.entries())
+console.log(map.get('apple')); // red
+console.log(map.has('dog')); // true
+console.log(map.keys());
+console.log(map.values());
+console.log(map.entries());
