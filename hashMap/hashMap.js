@@ -100,9 +100,36 @@ class HashMap {
 
 	// removes all entry in the hash map.
 	clear() {
-
+		this.bucket = new Array(this.capacity).fill(null);
 	}
 
+	// returns an array containing all the keys inside the hash map.
+	keys() {
+		let keysArr = [];
+
+		for (let list in this.bucket) {
+			if (this.bucket[list] !== null) {
+				this.bucket[list].forEach(element => {
+					keysArr.push(element[0]);
+				});
+			}
+		}
+		return keysArr;
+	}
+
+	// returns an array containing all the values
+	values() {
+		let valuesArr = [];
+
+		for (let list in this.bucket) {
+			if (this.bucket[list] !== null) {
+				this.bucket[list].forEach(element => {
+					valuesArr.push(element[1]);
+				});
+			}
+		}
+		return valuesArr;
+	}
 
 
 }
@@ -115,17 +142,6 @@ map.set('yahoo', 'new');
 map.set('yahaha', 'yay!!!!');
 map.set('noice', 'noice noice!');
 
-// console.log(map.get('yahaha'));
-// console.log(map.get('noice'));
-// console.log(map.get('lmao'));
-// console.log(map.get('nani'));
-
-// console.log(map.has('lmao'));
-// console.log(map.has('nani'));
-console.log(map.length());
-map.remove('lmao');
-
-// map.length();
-console.log(map.length());
-console.log(map.bucket);
 // console.log(map.bucket);
+console.log(map.keys());
+console.log(map.values());
