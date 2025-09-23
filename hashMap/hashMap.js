@@ -1,5 +1,5 @@
 class HashMap {
-	constructor(initLoadFactor = 0.8, initCap = 16) {
+	constructor(initLoadFactor = 0.8, initCap = 4) {
 		// loadFactor = items / capacity
 		this.loadFactor = initLoadFactor;
 		this.capacity = initCap;
@@ -67,9 +67,42 @@ class HashMap {
 		}
 	}
 
+	// takes a key as an argument. If the given key is in the hash map, it should remove the entry with that key and return true. If the key isn’t in the hash map, it should return false.
 	remove(key) {
+		let index = this.hash(key);
+		let target = this.bucket[index];
+
+		if (target === null) return false;
+		else {
+			let itemIndex = this.bucket[index].findIndex((pair) => pair[0] === key);
+			if (itemIndex === -1) return false;
+
+			// remove element
+			if (itemIndex !== -1) this.bucket[index].splice(itemIndex, 1);
+
+			// if there is no element left
+			if (this.bucket[index].length === 0) this.bucket[index] = null;
+			return true;
+		}
+	}
+
+	// returns the number of stored keys in the hash map.
+	length() {
+		let count = 0;
+
+		for (let list in this.bucket) {
+			if (this.bucket[list] !== null) {
+				count += this.bucket[list].length;
+			}
+		}
+		return count;
+	}
+
+	// removes all entry in the hash map.
+	clear() {
 
 	}
+
 
 
 }
@@ -82,13 +115,17 @@ map.set('yahoo', 'new');
 map.set('yahaha', 'yay!!!!');
 map.set('noice', 'noice noice!');
 
-console.log(map.get('yahaha'));
-console.log(map.get('noice'));
-console.log(map.get('lmao'));
-console.log(map.get('nani'));
+// console.log(map.get('yahaha'));
+// console.log(map.get('noice'));
+// console.log(map.get('lmao'));
+// console.log(map.get('nani'));
 
-console.log(map.has('lmao'));
-console.log(map.has('nani'));
+// console.log(map.has('lmao'));
+// console.log(map.has('nani'));
+console.log(map.length());
+map.remove('lmao');
 
-
+// map.length();
+console.log(map.length());
+console.log(map.bucket);
 // console.log(map.bucket);
