@@ -131,6 +131,18 @@ class HashMap {
 		return valuesArr;
 	}
 
+	// returns an array that contains each key, value pair. 
+	entries() {
+		let arr = [];
+
+		for (let list in this.bucket) {
+			if (this.bucket[list] !== null) {
+				arr = arr.concat(this.bucket[list]);
+			}
+		}
+		return arr;
+	}
+
 
 }
 
@@ -143,5 +155,6 @@ map.set('yahaha', 'yay!!!!');
 map.set('noice', 'noice noice!');
 
 // console.log(map.bucket);
-console.log(map.keys());
-console.log(map.values());
+// console.log(map.keys());
+// console.log(map.values());
+console.log(map.entries())
