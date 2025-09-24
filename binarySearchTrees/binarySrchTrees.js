@@ -35,9 +35,41 @@ function Tree(array) {
 		return root;
 	}
 
+	const getSuccessor = (currentNode) => {
+		currentNode = currentNode.right;
+		while (currentNode !== null && currentNode.left !== null) {
+			currentNode = currentNode.left;
+		}
+		return currentNode;
+	}
+
+	const deleteItem = (root, item) => {
+		// base case
+		if (root === null) return root;
+
+		if (root.data > item) {
+			root.left = deleteItem(root.left, item);
+		} else if (root.data < item) {
+			root.right = deleteItem(root.right, item);
+		} else {
+			// when root only have right children
+			if (root.left === null) return root.right;
+
+			// when root only have left children
+			if (root.right === null) return root.left;
+
+			// when root have both children
+			let successor = getSuccessor(root);
+			root.data = successor.data;
+			root.right = deleteItem(root.right, successor.data);
+		}
+		return root;
+
+	}
+
 	let root = buildTree(sortUniqueArr);
 
-	return { root, insert };
+	return { root, insert, deleteItem };
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -54,14 +86,14 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 };
 
 // let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
-let array = [1, 2, 3]
+let array = [1, 2, 3, 4, 5, 6, 7]
 
 
 let tree = Tree(array);
 prettyPrint(tree.root);
 
-tree.root = tree.insert(tree.root, 4);
-tree.root = tree.insert(tree.root, 3);
+tree.root = tree.insert(tree.root, 8);
+tree.root = tree.deleteItem(tree.root, 4);
 
 prettyPrint(tree.root);
 
