@@ -68,11 +68,11 @@ function Tree(array) {
 	}
 
 	const findItem = (root, key) => {
-		if (root.data === null) return null;
+		if (root === null) return null;
 
 		if (root.data > key) return findItem(root.left, key);
 		else if (root.data < key) return findItem(root.right, key);
-		else if (root.data === key) return root;
+		else return root;
 	}
 
 	const insert = (key) => root = addItem(root, key);
@@ -107,5 +107,5 @@ prettyPrint(tree.root);
 // tree.remove(4);
 // tree.insert(8);
 // tree.find(6);
-// console.log(tree.find(4));
-prettyPrint(tree.find(2));
+console.log(tree.find(6));
+// prettyPrint(tree.find(9));
