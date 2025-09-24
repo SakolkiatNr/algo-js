@@ -24,13 +24,13 @@ function Tree(array) {
 		return root;
 	}
 
-	const insert = (root, key) => {
+	const addItem = (root, key) => {
 		if (root === null) return Node(key);
 
 		if (root.data === key) return root;
 
-		if (key < root.data) root.left = insert(root.left, key);
-		else if (key > root.data) root.right = insert(root.right, key);
+		if (key < root.data) root.left = addItem(root.left, key);
+		else if (key > root.data) root.right = addItem(root.right, key);
 
 		return root;
 	}
@@ -67,9 +67,21 @@ function Tree(array) {
 
 	}
 
+	const findItem = (root, key) => {
+		if (root.data === null) return null;
+
+		if (root.data > key) return findItem(root.left, key);
+		else if (root.data < key) return findItem(root.right, key);
+		else if (root.data === key) return root;
+	}
+
+	const insert = (key) => root = addItem(root, key);
+	const remove = (key) => root = deleteItem(root, key);
+	const find = (key) => findItem(root, key);
+
 	let root = buildTree(sortUniqueArr);
 
-	return { root, insert, deleteItem };
+	return { root, insert, remove, find };
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -87,13 +99,13 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 
 // let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
 let array = [1, 2, 3, 4, 5, 6, 7]
-
+// let array = [1, 2, 3]
 
 let tree = Tree(array);
 prettyPrint(tree.root);
 
-tree.root = tree.insert(tree.root, 8);
-tree.root = tree.deleteItem(tree.root, 4);
-
-prettyPrint(tree.root);
-
+// tree.remove(4);
+// tree.insert(8);
+// tree.find(6);
+// console.log(tree.find(4));
+prettyPrint(tree.find(2));
