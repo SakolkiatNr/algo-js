@@ -1,8 +1,5 @@
 function Node(value) {
-	let data = value;
-	let left = null;
-	let right = null;
-	return { left, data, right };
+	return { left: null, data: value, right: null };
 }
 
 function Tree(array) {
@@ -29,6 +26,20 @@ function Tree(array) {
 	return { root };
 }
 
-let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
+const prettyPrint = (node, prefix = '', isLeft = true) => {
+	if (node === null) {
+		return;
+	}
+	if (node.right !== null) {
+		prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
+	}
+	console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
+	if (node.left !== null) {
+		prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
+	}
+};
 
-console.log(Tree(array).root)
+// let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
+let array = [1, 2, 3, 4, 5, 6, 7]
+
+prettyPrint(Tree(array).root)
