@@ -92,6 +92,33 @@ function Tree(array) {
 		}
 	}
 
+	const inOrderForEach = (root, callback) => {
+		if (!callback) throw new Error("Callback function required!");
+		if (!root) return;
+
+		inOrderForEach(root.left, callback);
+		callback(root.data);
+		inOrderForEach(root.right, callback);
+	}
+
+	const preOrderForEach = (root, callback) => {
+		if (!callback) throw new Error("Callback function required!");
+		if (!root) return;
+
+		callback(root.data);
+		preOrderForEach(root.left, callback);
+		preOrderForEach(root.right, callback);
+	}
+
+	const postOrderForEach = (root, callback) => {
+		if (!callback) throw new Error("Callback function required!");
+		if (!root) return;
+
+		postOrderForEach(root.left, callback);
+		postOrderForEach(root.right, callback);
+		callback(root.data);
+	}
+
 	let root = buildTree(sortUniqueArr);
 
 	const insert = (key) => root = addItem(root, key);
@@ -101,19 +128,39 @@ function Tree(array) {
 		try {
 			levelOrderForEach(root, callback);
 		} catch (e) {
-			// console.error(e);
-			console.log(`Hint: use -> levelOrder(callback)`);
+			console.error(e);
+			// console.log(`Hint: use -> Tree(array).levelOrder(callback)`);
+		}
+	}
+	const inOrder = (callback) => {
+		try {
+			inOrderForEach(root, callback);
+		} catch (e) {
+			console.log(e);
+		}
+	}
+	const preOrder = (callback) => {
+		try {
+			preOrderForEach(root, callback);
+		} catch (e) {
+			console.log(e);
+		}
+	}
+	const postOrder = (callback) => {
+		try {
+			postOrderForEach(root, callback);
+		} catch (e) {
+			console.log(e);
 		}
 	}
 
 
-	return { root, insert, remove, find, levelOrder };
+	return { root, insert, remove, find, levelOrder, inOrder, preOrder, postOrder };
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
-	if (node === null) {
-		return;
-	}
+	if (node === null) return;
+
 	if (node.right !== null) {
 		prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
 	}
@@ -132,9 +179,13 @@ function logging(value) {
 }
 let tree = Tree(array);
 // prettyPrint(tree.root);
-tree.levelOrder(logging);
+// tree.levelOrder(logging);
 
 prettyPrint(tree.root);
+// tree.inOrder(logging);
+// tree.preOrder(logging);
+tree.postOrder(logging);
+
 // tree.remove(4);
 // tree.insert(8);
 // tree.find(6);
