@@ -75,13 +75,39 @@ function Tree(array) {
 		else return root;
 	}
 
-	const insert = (key) => root = addItem(root, key);
-	const remove = (key) => root = deleteItem(root, key);
-	const find = (key) => findItem(root, key);
+	const levelOrderForEach = (root, callback) => {
+		if (!callback) throw new Error("Callback function required!");
+
+		if (!root) return;
+
+		let que = [root];
+		let index = 0;
+
+		while (index < que.length) {
+			let current = que[index++];
+			// callback(current.data);
+
+			if (current.left) que.push(current.left);
+			if (current.right) que.push(current.right);
+		}
+	}
 
 	let root = buildTree(sortUniqueArr);
 
-	return { root, insert, remove, find };
+	const insert = (key) => root = addItem(root, key);
+	const remove = (key) => root = deleteItem(root, key);
+	const find = (key) => findItem(root, key);
+	const levelOrder = (callback) => {
+		try {
+			levelOrderForEach(root, callback);
+		} catch (e) {
+			// console.error(e);
+			console.log(`Hint: use -> levelOrder(callback)`);
+		}
+	}
+
+
+	return { root, insert, remove, find, levelOrder };
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -101,11 +127,16 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 let array = [1, 2, 3, 4, 5, 6, 7]
 // let array = [1, 2, 3]
 
+function logging(value) {
+	return console.log(value);
+}
 let tree = Tree(array);
-prettyPrint(tree.root);
+// prettyPrint(tree.root);
+tree.levelOrder(logging);
 
+prettyPrint(tree.root);
 // tree.remove(4);
 // tree.insert(8);
 // tree.find(6);
-console.log(tree.find(6));
+// console.log(tree.find(6));
 // prettyPrint(tree.find(9));
