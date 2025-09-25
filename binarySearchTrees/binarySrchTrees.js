@@ -2,7 +2,7 @@ function Node(value) {
 	return { left: null, data: value, right: null };
 }
 
-function Tree(array) {
+export function Tree(array) {
 
 	let sortUniqueArr = [...new Set(array.sort((a, b) => a - b))];
 
@@ -206,7 +206,7 @@ function Tree(array) {
 	return { insert, remove, find, levelOrder, inOrder, preOrder, postOrder, height, depth, isBalanced, rebalance, get root() { return root; } };
 }
 
-const prettyPrint = (node, prefix = '', isLeft = true) => {
+export const prettyPrint = (node, prefix = '', isLeft = true) => {
 	if (node === null) return;
 
 	if (node.right !== null) {
@@ -219,23 +219,21 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 };
 
 // let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
-// let array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-let array = [1, 2, 3]
-// let array = [5, 10, 20];
+// let array = [1, 2, 3]
 
-function logging(value) {
-	return console.log(value);
-}
-
-let tree = Tree(array);
-// tree.levelOrder(logging);
-// tree.inOrder(logging);
-// tree.preOrder(logging);
-// tree.postOrder(logging);
-tree.insert(15);
-tree.insert(25);
-tree.insert(22);
-
-prettyPrint(tree.root);
-tree.rebalance();
-prettyPrint(tree.root);
+// function logging(value) {
+// 	return console.log(value);
+// }
+//
+// let tree = Tree(array);
+// // tree.levelOrder(logging);
+// // tree.inOrder(logging);
+// // tree.preOrder(logging);
+// // tree.postOrder(logging);
+// tree.insert(15);
+// tree.insert(25);
+// tree.insert(22);
+//
+// prettyPrint(tree.root);
+// tree.rebalance();
+// prettyPrint(tree.root);
