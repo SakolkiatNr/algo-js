@@ -64,7 +64,6 @@ function Tree(array) {
 			root.right = deleteItem(root.right, successor.data);
 		}
 		return root;
-
 	}
 
 	const findItem = (root, key) => {
@@ -150,17 +149,36 @@ function Tree(array) {
 		}
 	}
 
+	const checkBalanced = (root) => {
+		if (root === null) return true;
+		const leftNodeHeight = rootHeight(root.left);
+		const rightNodeHeight = rootHeight(root.right);
+
+		if (Math.abs(leftNodeHeight - rightNodeHeight) > 1) return false;
+		return checkBalanced(root.left) && checkBalanced(root.right);
+	}
+
+	const rebalance = () => {
+		let newRoot = [];
+		inOrder((data) => newRoot.push(data));
+		root = buildTree(newRoot);
+		return root;
+	}
+
 	let root = buildTree(sortUniqueArr);
 
 	const insert = (key) => root = addItem(root, key);
 	const remove = (key) => root = deleteItem(root, key);
 	const find = (key) => findItem(root, key);
+	const height = (value) => valueHeight(root, value);
+	const depth = (value) => valueDepth(root, value);
+	const isBalanced = () => checkBalanced(root);
+
 	const levelOrder = (callback) => {
 		try {
 			levelOrderForEach(root, callback);
 		} catch (e) {
 			console.error(e);
-			// console.log(`Hint: use -> Tree(array).levelOrder(callback)`);
 		}
 	}
 	const inOrder = (callback) => {
@@ -185,12 +203,7 @@ function Tree(array) {
 		}
 	}
 
-	const height = (value) => valueHeight(root, value);
-	const depth = (value) => valueDepth(root, value);
-
-
-
-	return { root, insert, remove, find, levelOrder, inOrder, preOrder, postOrder, height, depth };
+	return { insert, remove, find, levelOrder, inOrder, preOrder, postOrder, height, depth, isBalanced, rebalance, get root() { return root; } };
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -205,26 +218,24 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 	}
 };
 
-// let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 9999 ]
-let array = [1, 2, 3, 4, 5, 6, 7, 8]
-// let array = [1, 2, 3]
+// let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
+// let array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+let array = [1, 2, 3]
+// let array = [5, 10, 20];
 
 function logging(value) {
 	return console.log(value);
 }
+
 let tree = Tree(array);
-prettyPrint(tree.root);
-
-let test = 3;
-console.log(`Height of value ${test}`);
-console.log(`Height: ${tree.height(test)}`);
-console.log(`Depth: ${tree.depth(test)}`);
-
-// prettyPrint(tree.root);
 // tree.levelOrder(logging);
 // tree.inOrder(logging);
 // tree.preOrder(logging);
 // tree.postOrder(logging);
-// tree.remove(4);
-// tree.insert(8);
-// tree.find(6);
+tree.insert(15);
+tree.insert(25);
+tree.insert(22);
+
+prettyPrint(tree.root);
+tree.rebalance();
+prettyPrint(tree.root);
