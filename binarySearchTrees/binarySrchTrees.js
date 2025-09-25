@@ -85,7 +85,7 @@ function Tree(array) {
 
 		while (index < que.length) {
 			let current = que[index++];
-			// callback(current.data);
+			callback(current.data);
 
 			if (current.left) que.push(current.left);
 			if (current.right) que.push(current.right);
@@ -135,6 +135,21 @@ function Tree(array) {
 		return rootHeight(item);
 	}
 
+	const valueDepth = (root, value) => {
+		if (root === null) return null;
+
+		if (value < root.data) {
+			const left = valueDepth(root.left, value);
+			return left === null ? null : 1 + left;
+		} else if (value > root.data) {
+			const right = valueDepth(root.right, value);
+			return right === null ? null : 1 + right;
+		} else {
+			// found value!
+			return 0;
+		}
+	}
+
 	let root = buildTree(sortUniqueArr);
 
 	const insert = (key) => root = addItem(root, key);
@@ -171,10 +186,11 @@ function Tree(array) {
 	}
 
 	const height = (value) => valueHeight(root, value);
+	const depth = (value) => valueDepth(root, value);
 
 
 
-	return { root, insert, remove, find, levelOrder, inOrder, preOrder, postOrder, height };
+	return { root, insert, remove, find, levelOrder, inOrder, preOrder, postOrder, height, depth };
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -199,9 +215,10 @@ function logging(value) {
 let tree = Tree(array);
 prettyPrint(tree.root);
 
-let test = 2;
+let test = 3;
 console.log(`Height of value ${test}`);
 console.log(`Height: ${tree.height(test)}`);
+console.log(`Depth: ${tree.depth(test)}`);
 
 // prettyPrint(tree.root);
 // tree.levelOrder(logging);
