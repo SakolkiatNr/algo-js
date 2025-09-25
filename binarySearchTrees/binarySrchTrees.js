@@ -119,6 +119,22 @@ function Tree(array) {
 		callback(root.data);
 	}
 
+	const rootHeight = (root) => {
+		if (root == null) return -1;
+
+		let leftHeight = rootHeight(root.left);
+		let rightHeight = rootHeight(root.right);
+
+		return Math.max(leftHeight, rightHeight) + 1;
+	}
+
+	const valueHeight = (root, value) => {
+		let item = findItem(root, value);
+		if (!item) return null;
+
+		return rootHeight(item);
+	}
+
 	let root = buildTree(sortUniqueArr);
 
 	const insert = (key) => root = addItem(root, key);
@@ -154,8 +170,11 @@ function Tree(array) {
 		}
 	}
 
+	const height = (value) => valueHeight(root, value);
 
-	return { root, insert, remove, find, levelOrder, inOrder, preOrder, postOrder };
+
+
+	return { root, insert, remove, find, levelOrder, inOrder, preOrder, postOrder, height };
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -170,24 +189,25 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 	}
 };
 
-// let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
-let array = [1, 2, 3, 4, 5, 6, 7]
+// let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 9999 ]
+let array = [1, 2, 3, 4, 5, 6, 7, 8]
 // let array = [1, 2, 3]
 
 function logging(value) {
 	return console.log(value);
 }
 let tree = Tree(array);
+prettyPrint(tree.root);
+
+let test = 2;
+console.log(`Height of value ${test}`);
+console.log(`Height: ${tree.height(test)}`);
+
 // prettyPrint(tree.root);
 // tree.levelOrder(logging);
-
-prettyPrint(tree.root);
 // tree.inOrder(logging);
 // tree.preOrder(logging);
-tree.postOrder(logging);
-
+// tree.postOrder(logging);
 // tree.remove(4);
 // tree.insert(8);
 // tree.find(6);
-// console.log(tree.find(6));
-// prettyPrint(tree.find(9));
